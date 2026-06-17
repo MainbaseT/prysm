@@ -739,7 +739,7 @@ func TestSubscribeWithSyncSubnets_DynamicSwitchFork(t *testing.T) {
 		nse:              nse,
 		getSubnetsToJoin: r.activeSyncSubnetIndices,
 	})
-	r.trySubscribeSubnets(sp)
+	r.trySubscribeSubnets(t.Context(), sp)
 	assert.Equal(t, 2, len(r.cfg.p2p.PubSub().GetTopics()))
 	topicMap := map[string]bool{}
 	for _, t := range r.cfg.p2p.PubSub().GetTopics() {
@@ -762,7 +762,7 @@ func TestSubscribeWithSyncSubnets_DynamicSwitchFork(t *testing.T) {
 	// clear the cache and re-subscribe to subnets.
 	// this should result in the subscriptions being removed
 	cache.SyncSubnetIDs.EmptyAllCaches()
-	r.trySubscribeSubnets(sp)
+	r.trySubscribeSubnets(t.Context(), sp)
 	assert.Equal(t, 0, len(r.cfg.p2p.PubSub().GetTopics()))
 }
 
